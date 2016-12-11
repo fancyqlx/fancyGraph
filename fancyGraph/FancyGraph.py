@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import threading
 from fancyGraph.Worker import Worker
+import time
 
 """
 A logic class for scheduling the threads.
@@ -47,9 +48,10 @@ class FancyGraph():
             self.count += 1
             print ("superstep: ", self.count)
             self.flag = self.isTerminated()
-            
-        for worker in workers:
-            worker.isTerminated(self.flag)
+#            for worker in workers:
+#                worker.flag = self.flag
+#            barrier.wait()
+        barrier.abort()
             
         for worker in workers:
             worker.join()

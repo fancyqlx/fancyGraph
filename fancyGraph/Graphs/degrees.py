@@ -6,10 +6,10 @@ from fancyGraph.FancyGraph import FancyGraph
 class graphs(Vertex):
     def __init__(self, ID, value, neighbors):
         Vertex.__init__(self, ID, value, neighbors)
-        self.deg = 0
+        self.deg = len(neighbors)
         
     def update(self):
-        self.deg = len(self.neighbors)
+        pass
 
 """
 This method returns list of objects of vertex.

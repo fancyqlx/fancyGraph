@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import threading
+import time
 
 """
 Worker is a class that inherits thread to simulate a processor, i.e., a vertex.
@@ -9,8 +10,8 @@ class Worker(threading.Thread):
     def __init__(self, vertex, barrier):
         threading.Thread.__init__(self)
         self.vertex = vertex
-        self.flag = True
         self.barrier = barrier
+#        self.flag = True
         
     """
     A method that overrides run() in Thread.
@@ -19,11 +20,13 @@ class Worker(threading.Thread):
     all the workers called this function wait().
     """
     def run(self):
-        while self.flag:
+        while True:
             self.barrier.wait()
-            print (self.getName())
+            try:
+                self.barrier.wait()
+            except threading.BrokenBarrierError:
+                break
+            print (self.getName(), time.time())
             if self.vertex.active:
                 self.vertex.update()
-            
-    def isTerminated(self,flag):
-        self.flag = flag
+            #self.barrier.wait()
